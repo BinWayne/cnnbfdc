@@ -18,8 +18,21 @@ public class SaleHouseService {
 
         SalesHouseEntity result  = saleHouseDao.findByName(salesHouseEntity.getProjectName());
         if(result!=null){
-            System.out.println("已经存在 项目->" + salesHouseEntity.getProjectName()+",进行更新");
-            saleHouseDao.updateSaleHouseEntity(salesHouseEntity);
+            if(result.equals(salesHouseEntity)){
+                System.out.println("sale house 完全一样!!");
+                return;
+            }
+            if(!(result.getCreatedAt().equals(salesHouseEntity.getCreatedAt()))){
+                System.out.println("日期不同 sales house 查询出来日期->"+result.getCreatedAt()+"，将要插入日期-> "+salesHouseEntity.getCreatedAt());
+                saleHouseDao.save(salesHouseEntity);
+            }else{
+                System.out.println("sale house 部分不同");
+                System.out.println("sale house result --> "+result.toString());
+                System.out.println("sale house entity --> "+salesHouseEntity.toString());
+                saleHouseDao.updateSaleHouseEntity(salesHouseEntity);
+            }
+
+
         }else{
             saleHouseDao.save(salesHouseEntity);
         }

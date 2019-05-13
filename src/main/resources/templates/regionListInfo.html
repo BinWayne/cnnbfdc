@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SpringMVC + Thymeleaf + Bootstrap 4 Table Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<div class="container">
+    <h1>区域销售情况</h1>
+    <div class="row col-md-12 table-responsive">
+        <table id="customerTable" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+
+                <th class="">区域名称</th>
+                <th>可售套数(套)</th>
+                <th>可售面积(㎡)</th>
+                <th>已售套数(套)</th>
+                <th>已售面积(㎡)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+
+ private int id;
+    private int availableSaleCount; //可售套数
+    private double availableSaleArea;// 可售面积
+    private int saleCount;
+    private double saleArea;
+    private String regionName;
+-->
+            <tr th:each="region, rowStat: ${regionEntities}"
+                th:style="${rowStat.odd} ? 'color: blue' : 'color: gray;'">
+                <td th:text="${region.regionName}"></td>
+                <td th:text="${region.availableSaleCount}"></td>
+                <td th:text="${region.availableSaleArea}"></td>
+                <td th:text="${region.saleCount}"></td>
+                <td th:text="${region.saleArea}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

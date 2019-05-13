@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SpringMVC + Thymeleaf + Bootstrap 4 Table Example</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<div class="container">
+    <h1>项目今日网签</h1>
+    <div class="row col-md-12 table-responsive">
+        <table id="customerTable" class="table table-bordered table-hover ">
+            <thead>
+            <tr>
+
+                <th>项目名称</th>
+                <th>区域名称</th>
+                <th>销售套数(套)</th>
+                <th>销售面积(㎡)</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="saleHouse, rowStat: ${salesHouseEntities}"
+                th:style="${rowStat.odd} ? 'color: blue' : 'color: gray;'">
+                <td th:text="${saleHouse.projectName}"></td>
+                <td th:text="${saleHouse.regionName}"></td>
+                <td th:text="${saleHouse.saleCount}">套</td>
+                <td th:text="${saleHouse.saleArea}">平方米</td>
+
+               <!-- <td th:text="${saleHouse.createdAt}"></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

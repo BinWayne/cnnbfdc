@@ -41,17 +41,5 @@ public interface SaleHouseCustomizedLogRepository {
     )
     public SalesHouseEntity findByName(@Param("projectName")String projectName);
 
-    /**
-     * id |created_at          |project_name |region_name |sale_area |sale_count |
-     * ---|--------------------|-------------|------------|----------|-----------|
-     * 1  |2019-05-10 08:10:56 |院子           |张三区         |2342.323  |23         |
-     * 2  |2019-05-10 09:11:33 |院子           |张三区         |2342.323  |23         |
-     *
-     *  private String projectName;//项目名称
-     *     private String regionName;//项目区域
-     *     private int saleCount;//销售套数
-     *     private double saleArea;//销售面积
-     *     @Column(name = "created_at")
-     *     private Date createdAt;
-     * */
+
 }

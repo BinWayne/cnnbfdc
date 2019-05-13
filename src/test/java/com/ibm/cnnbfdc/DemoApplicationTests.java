@@ -1,5 +1,6 @@
 package com.ibm.cnnbfdc;
 
+import com.ibm.cnnbfdc.dao.RegionDao;
 import com.ibm.cnnbfdc.dao.SaleHouseDao;
 import com.ibm.cnnbfdc.entity.RegionEntity;
 import com.ibm.cnnbfdc.entity.SalesHouseEntity;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoApplicationTests {
@@ -21,6 +24,9 @@ public class DemoApplicationTests {
 
 	@Autowired
 	private RegionService regionService;
+
+	@Autowired
+	private RegionDao regionDao;
 
 	@Autowired
 	private SaleHouseDao saleHouseDao;
@@ -64,6 +70,14 @@ public class DemoApplicationTests {
 
 		System.out.println(saleHouseDao.findByName("院子"));
 
+	}
+
+	@Test
+	public void fetchRegionData(){
+		RegionEntity entity = regionDao.findByRegionName("奉化区");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = simpleDateFormat.format(entity.getCreatedAt());
+		System.out.println(date);
 	}
 
 }
