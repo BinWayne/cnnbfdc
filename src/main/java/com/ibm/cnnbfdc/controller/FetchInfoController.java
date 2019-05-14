@@ -8,11 +8,15 @@ import com.ibm.cnnbfdc.entity.SalesHouseEntity;
 import com.ibm.cnnbfdc.service.RegionService;
 import com.ibm.cnnbfdc.service.SaleHouseService;
 import com.ibm.cnnbfdc.utils.HttpUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,19 +34,54 @@ public class FetchInfoController {
   private SaleHouseService saleHouseService;
 
     @RequestMapping("/region/allinfo")
-    public String fetchRegionInfo(Model model) throws NoSuchFunctionException, NoSuchAxisException, XpathSyntaxErrorException {
+    public String fetchRegionInfo(Model model,@RequestParam(value = "s",required = false) String startDate,@RequestParam(value = "e",required = false) String endDate) throws NoSuchFunctionException, NoSuchAxisException, XpathSyntaxErrorException {
+        List<RegionEntity> regionEntities = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        List<RegionEntity> regionEntities = regionService.findAll();
+        if(StringUtils.isBlank(startDate) && StringUtils.isBlank(endDate)){
+            regionEntities = regionService.findAll();
+        }else{
+            if(StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)){
+
+                startDate = startDate.concat(" 00:00:00");
+                endDate = endDate.concat(" 23:59:59");
+                regionEntities = regionService.findByDate(startDate,endDate);
+            }else if(StringUtils.isNotBlank(startDate) && StringUtils.isBlank(endDate)){
+                startDate = startDate.concat(" 00:00:00");
+                endDate = simpleDateFormat.format(new Date());
+
+                endDate = endDate.concat(" 23:59:59");
+                regionEntities = regionService.findByDate(startDate,endDate);
+            }
+
+        }
+
         model.addAttribute("regionEntities", regionEntities);
         return "regionListInfo";
     }
 
     @RequestMapping("/house/allinfo")
-    public  String fetchHouseInfo(Model model) throws NoSuchFunctionException, NoSuchAxisException, XpathSyntaxErrorException {
+    public  String fetchHouseInfo(Model model,@RequestParam(value = "s",required = false) String startDate,@RequestParam(value = "e",required = false) String endDate) throws NoSuchFunctionException, NoSuchAxisException, XpathSyntaxErrorException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        List<SalesHouseEntity> salesHouseEntities=null;
+        if(StringUtils.isBlank(startDate) && StringUtils.isBlank(endDate)){
+            salesHouseEntities = saleHouseService.findAll();
+        }else {
+            if (StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)) {
 
+                startDate = startDate.concat(" 00:00:00");
+                endDate = endDate.concat(" 23:59:59");
+                salesHouseEntities = saleHouseService.findByDate(startDate,endDate);
+            }else if(StringUtils.isNotBlank(startDate) && StringUtils.isBlank(endDate)){
+                startDate = startDate.concat(" 00:00:00");
+                endDate = simpleDateFormat.format(new Date());
+                endDate = endDate.concat(" 23:59:59");
+                salesHouseEntities = saleHouseService.findByDate(startDate,endDate);
+            }
 
-        List<SalesHouseEntity> salesHouseEntities = saleHouseService.findAll();
-        model.addAttribute("salesHouseEntities", salesHouseEntities);
+        }
+
+                model.addAttribute("salesHouseEntities", salesHouseEntities);
         return "houseListInfo";
     }
 

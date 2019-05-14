@@ -31,7 +31,10 @@ public class SalesHouseEntity {
     private Date createdAt;
 
 
-
+    @PrePersist
+    void createdAt() {
+        this.createdAt =  new Date();
+    }
 
     public int getSaleCount() {
         return saleCount;

@@ -5,6 +5,10 @@ import com.ibm.cnnbfdc.entity.RegionEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+
+import javax.swing.plaf.synth.Region;
+import java.util.List;
 
 public interface RegionCustomizedLogRepository {
 
@@ -20,19 +24,33 @@ public interface RegionCustomizedLogRepository {
     public void updateRegionEntity(@Param("region")RegionEntity region);
 
     @Query(
-            value="select * from region where region_name = :regionName",
+            value="select * from region where region_name = :regionName  and created_at between :startDate and :endDate",
             nativeQuery = true
     )
-    public RegionEntity findByRegionName(@Param("regionName")String regionName);
+    public RegionEntity findByRegionName(@Param("regionName")String regionName,@Param("startDate")String startDate,@Param("endDate")String endDate);
 
-    /**
-     *
-     * available_sale_area |available_sale_count |region_name |sale_area |sale_count
-     *
-     *  private int availableSaleCount; //可售套数
-     *     private double availableSaleArea;// 可售面积
-     *     private int saleCount;
-     *     private double saleArea;
-     *     private String regionName;
-     * */
+
+
+//    @Modifying
+//    @Query(
+//            value = "insert into region (" +
+//                    "available_sale_area," +
+//                    "available_sale_count," +
+//                    "region_name," +
+//                    "sale_area," +
+//                    "sale_count) VALUES (" +
+//                    ":#{#region.availableSaleArea}," +
+//                    ":#{#region.availableSaleCount}," +
+//                    ":#{#region.regionName}," +
+//                    ":#{#region.saleArea}," +
+//                    ":#{#region.saleCount})",
+//            nativeQuery = true
+//    )
+//    public void insertRegion(@Param("region")RegionEntity entity);
+
+    @Query(
+            value="select * from region where  created_at between :startDate and :endDate",
+            nativeQuery = true
+    )
+    public List<RegionEntity> findByDate(@Param("startDate")String startDate,@Param("endDate")String endDate);
 }

@@ -25,6 +25,7 @@
                 <th>可售面积(㎡)</th>
                 <th>已售套数(套)</th>
                 <th>已售面积(㎡)</th>
+                <th>日期</th>
             </tr>
             </thead>
             <tbody>
@@ -44,6 +45,7 @@
                 <td th:text="${region.availableSaleArea}"></td>
                 <td th:text="${region.saleCount}"></td>
                 <td th:text="${region.saleArea}"></td>
+                <td th:text="${region.createdAt}"></td>
             </tr>
             </tbody>
         </table>

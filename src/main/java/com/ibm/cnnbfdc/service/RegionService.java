@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.xml.crypto.dsig.SignatureMethod;
+
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,15 +27,16 @@ public class RegionService {
         regionDao.updateRegionEntity(entity);
     }
 
-    @Transactional
-    public RegionEntity findByName(String name){
-        return regionDao.findByRegionName(name);
-    }
+
 
     @Transactional
     public void updateIfExist(RegionEntity regionEntity){
 
-        RegionEntity result  = regionDao.findByRegionName(regionEntity.getRegionName());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = simpleDateFormat.format(new Date()).concat(" 00:00:00");
+        String endDate = simpleDateFormat.format(new Date()).concat(" 23:59:59");
+        System.out.println(startDate +": "+endDate);
+        RegionEntity result  = regionDao.findByRegionName(regionEntity.getRegionName(),startDate,endDate);
 
 
         if(result!=null){
@@ -64,4 +66,10 @@ public class RegionService {
         return regionDao.findAll();
     }
 
+
+    public List<RegionEntity> findByDate(String startDate,String endDate){
+        System.out.println("start date -> "+ startDate);
+        System.out.println("end date -> "+ endDate);
+        return regionDao.findByDate(startDate,endDate);
+    }
 }

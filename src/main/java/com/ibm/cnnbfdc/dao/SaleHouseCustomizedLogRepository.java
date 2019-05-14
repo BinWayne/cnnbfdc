@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface SaleHouseCustomizedLogRepository {
 
 
@@ -36,10 +38,18 @@ public interface SaleHouseCustomizedLogRepository {
 
 
     @Query(
-            value="select * from saleshouse where project_name = :projectName",
+            value="select * from saleshouse where project_name = :projectName and created_at between :startDate and :endDate",
             nativeQuery = true
     )
-    public SalesHouseEntity findByName(@Param("projectName")String projectName);
+    public SalesHouseEntity findByName(@Param("projectName")String projectName,@Param("startDate")String startDate,@Param("endDate")String endDate);
+
+
+
+    @Query(
+            value="select * from saleshouse where created_at between :startDate and :endDate",
+            nativeQuery = true
+    )
+    public List<SalesHouseEntity> findByDate(@Param("startDate")String startDate,@Param("endDate")String endDate);
 
 
 }

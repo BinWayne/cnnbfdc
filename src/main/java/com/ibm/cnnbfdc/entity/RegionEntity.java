@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 
-import org.springframework.data.annotation.CreatedDate;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +35,10 @@ public class RegionEntity {
     private Date createdAt;
 
 
+    @PrePersist
+    void createdAt() {
+        this.createdAt =  new Date();
+    }
 
     public int getAvailableSaleCount() {
         return availableSaleCount;

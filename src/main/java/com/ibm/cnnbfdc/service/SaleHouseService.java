@@ -2,10 +2,13 @@ package com.ibm.cnnbfdc.service;
 
 import com.ibm.cnnbfdc.dao.SaleHouseDao;
 import com.ibm.cnnbfdc.entity.SalesHouseEntity;
+import org.hibernate.query.criteria.internal.SelectionImplementor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,7 +19,12 @@ public class SaleHouseService {
     @Transactional
     public void updateIfExist(SalesHouseEntity salesHouseEntity){
 
-        SalesHouseEntity result  = saleHouseDao.findByName(salesHouseEntity.getProjectName());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = simpleDateFormat.format(new Date()).concat(" 00:00:00");
+        String endDate = simpleDateFormat.format(new Date()).concat(" 23:59:59");
+        System.out.println(startDate +": "+endDate);
+        SalesHouseEntity result = saleHouseDao.findByName(salesHouseEntity.getProjectName(),startDate,endDate);
+
         if(result!=null){
             if(result.equals(salesHouseEntity)){
                 System.out.println("sale house 完全一样!!");
@@ -41,5 +49,11 @@ public class SaleHouseService {
     public List<SalesHouseEntity> findAll(){
 
         return saleHouseDao.findAll();
+    }
+
+    public List<SalesHouseEntity> findByDate(String s,String e){
+        System.out.println("start date ->" +s);
+        System.out.println("e date ->" +e);
+        return saleHouseDao.findByDate(s,e);
     }
 }

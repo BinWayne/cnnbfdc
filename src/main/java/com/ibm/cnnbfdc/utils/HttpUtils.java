@@ -115,7 +115,7 @@ public class HttpUtils {
 
                 }
 
-                salesHouseEntity.setCreatedAt(new Date());
+
                 count++;
 
             }
@@ -138,6 +138,7 @@ public class HttpUtils {
             List <Element> tdList = tr.children();
             int count = 0;
             RegionEntity regionEntity = new RegionEntity();
+            regionEntity.setCreatedAt(new Date());
             for (Element e : tdList) {
 
                 switch (count){
@@ -148,8 +149,6 @@ public class HttpUtils {
                     case 4: regionEntity.setAvailableSaleArea(Double.parseDouble(e.text().substring(0,e.text().length()-3)));break;
 
                 }
-
-                regionEntity.setCreatedAt(new Date());
                 count++;
 
             }

@@ -24,6 +24,7 @@
                 <th>区域名称</th>
                 <th>销售套数(套)</th>
                 <th>销售面积(㎡)</th>
+                <th>日期</th>
 
             </tr>
             </thead>
@@ -35,6 +36,7 @@
                 <td th:text="${saleHouse.regionName}"></td>
                 <td th:text="${saleHouse.saleCount}">套</td>
                 <td th:text="${saleHouse.saleArea}">平方米</td>
+                <td th:text="${saleHouse.createdAt}"/>
 
                <!-- <td th:text="${saleHouse.createdAt}"></td>-->
             </tr>

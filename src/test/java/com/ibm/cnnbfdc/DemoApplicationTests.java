@@ -63,21 +63,7 @@ public class DemoApplicationTests {
 //		regionService.update(entity);
 	}
 
-	@Test
-	public void testFindByName(){
-		RegionEntity entity = regionService.findByName("张三区");
-		System.out.println(entity.toString());
 
-		System.out.println(saleHouseDao.findByName("院子"));
 
-	}
-
-	@Test
-	public void fetchRegionData(){
-		RegionEntity entity = regionDao.findByRegionName("奉化区");
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String date = simpleDateFormat.format(entity.getCreatedAt());
-		System.out.println(date);
-	}
 
 }
